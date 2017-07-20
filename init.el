@@ -35,6 +35,7 @@
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/"))
   (add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
+  (add-to-list 'package-archives '("elpy"      . "https://jorgenschaefer.github.io/packages/"))
   (package-initialize))
 
 (require 'cl)
@@ -47,6 +48,7 @@
     js2-mode
     yaml-mode
     flymake-python-pyflakes
+    elpy
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -66,8 +68,8 @@
 (add-to-list 'load-path "~/git/helm")
 (require 'helm-config)
 
-(require 'auto-complete)
-(global-auto-complete-mode t)
+;(require 'auto-complete)
+;(global-auto-complete-mode t)
 
 (require 'linum)
 (setq linum-format
@@ -168,6 +170,26 @@
 (setq cperl-highlight-variables-indiscriminately t)
 (setq cperl-tab-always-indent t)
 
+;; python-elpy
+(elpy-enable)
+(custom-set-variables
+ '(company-minimum-prefix-length 1)
+ '(company-selection-wrap-around t))
+(custom-set-faces
+ '(default ((t (:background "#131313" :foreground "white"))))
+ '(company-scrollbar-bg ((t (:inherit company-tooltip :background "dim gray"))))
+ '(company-scrollbar-fg ((t (:background "blue"))))
+ '(company-tooltip ((t (:background "#333333" :foreground "white"))))
+ '(company-tooltip-annotation ((t (:inherit company-tooltip :foreground "white"))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :foreground "white"))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "white"))))
+ '(company-tooltip-selection ((t (:inherit company-tooltip :background "#131388"))))
+ '(mode-line ((t (:foreground "#F8F8F2" :background "#303030" :box (:line-width 1 :color "#000000" :style released-button)))))
+ '(mode-line-buffer-id ((t (:foreground nil :background nil))))
+ '(mode-line-inactive ((t (:foreground "#BCBCBC" :background "#101010" :box (:line-width 1 :color "#333333"))))))
+(add-hook 'python-mode-hook '(lambda ()
+                               (define-key python-mode-map (kbd "C-c C-g") 'elpy-goto-definition)))
+
 ;; python
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq flymake-python-pyflakes-executable "~/.pyenv/shims/flake8")
@@ -179,6 +201,14 @@
       (if help (message "%s" help)))))
 (add-hook 'post-command-hook 'flymake-show-help)
 
+;; autopep8
+(require 'py-autopep8)
+(add-hook 'python-mode-hook '(lambda ()
+                               (define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)))
+
+;; aiml
+(add-to-list 'auto-mode-alist '("\\.aiml$"     . xml-mode))
+
 
 ;;######################################################
 ;; Hooks
@@ -189,8 +219,3 @@
  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'after-save-hook 'save-hook)
 (setq compilation-window-height 20)
-
-;; autopep8
-(require 'py-autopep8)
-(add-hook 'python-mode-hook '(lambda ()
-                               (define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)))
