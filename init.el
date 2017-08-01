@@ -48,6 +48,7 @@
     js2-mode
     yaml-mode
     flymake-python-pyflakes
+    helm
     elpy
     ))
 
