@@ -49,6 +49,7 @@
     yaml-mode
     flymake-python-pyflakes
     helm
+    pyenv-mode
     elpy
     ))
 
@@ -171,8 +172,32 @@
 (setq cperl-highlight-variables-indiscriminately t)
 (setq cperl-tab-always-indent t)
 
+;; python
+(pyenv-mode)
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+(setq flymake-python-pyflakes-executable "~/.pyenv/shims/flake8")
+(custom-set-variables
+ '(flymake-python-pyflakes-extra-arguments (quote ("--max-line-length=120" "--ignore=E128"))))
+(defun flymake-show-help ()
+  (when (get-char-property (point) 'flymake-overlay)
+    (let ((help (get-char-property (point) 'help-echo)))
+      (if help (message "%s" help)))))
+(add-hook 'post-command-hook 'flymake-show-help)
+
+;; autopep8
+(require 'py-autopep8)
+(add-hook 'python-mode-hook '(lambda ()
+                               (define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)))
+
+;; pyenv for elpy
+(require 'set-pyenv-version-path)
+(add-hook 'find-file-hook 'set-pyenv-version-path)
+(add-to-list 'exec-path "~/.pyenv/shims")
+
 ;; python-elpy
 (elpy-enable)
+
+(setq elpy-rpc-backend "jedi")
 (custom-set-variables
  '(company-minimum-prefix-length 1)
  '(company-selection-wrap-around t))
@@ -190,22 +215,6 @@
  '(mode-line-inactive ((t (:foreground "#BCBCBC" :background "#101010" :box (:line-width 1 :color "#333333"))))))
 (add-hook 'python-mode-hook '(lambda ()
                                (define-key python-mode-map (kbd "C-c C-g") 'elpy-goto-definition)))
-
-;; python
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-(setq flymake-python-pyflakes-executable "~/.pyenv/shims/flake8")
-(custom-set-variables
- '(flymake-python-pyflakes-extra-arguments (quote ("--max-line-length=120" "--ignore=E128"))))
-(defun flymake-show-help ()
-  (when (get-char-property (point) 'flymake-overlay)
-    (let ((help (get-char-property (point) 'help-echo)))
-      (if help (message "%s" help)))))
-(add-hook 'post-command-hook 'flymake-show-help)
-
-;; autopep8
-(require 'py-autopep8)
-(add-hook 'python-mode-hook '(lambda ()
-                               (define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)))
 
 ;; aiml
 (add-to-list 'auto-mode-alist '("\\.aiml$"     . xml-mode))
