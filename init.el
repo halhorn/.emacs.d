@@ -51,6 +51,7 @@
     helm
     pyenv-mode
     elpy
+    sphinx-doc
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -183,6 +184,9 @@
     (let ((help (get-char-property (point) 'help-echo)))
       (if help (message "%s" help)))))
 (add-hook 'post-command-hook 'flymake-show-help)
+(add-hook 'python-mode-hook (lambda ()
+                              (require 'sphinx-doc)
+                              (sphinx-doc-mode t)))
 
 ;; autopep8
 (require 'py-autopep8)
@@ -202,7 +206,7 @@
  '(company-minimum-prefix-length 1)
  '(company-selection-wrap-around t))
 (custom-set-faces
- '(default ((t (:background "#131313" :foreground "white"))))
+;; '(default ((t (:background "#131313" :foreground "white"))))
  '(company-scrollbar-bg ((t (:inherit company-tooltip :background "dim gray"))))
  '(company-scrollbar-fg ((t (:background "blue"))))
  '(company-tooltip ((t (:background "#333333" :foreground "white"))))
