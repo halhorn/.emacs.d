@@ -30,7 +30,7 @@ python -m test.run test/moge/fuga/hogehoge.py
 ```
 これは以下のように実装できます。
 
-```py3
+```py3:test/run.py
 from unittest import TestLoader
 from unittest import TextTestRunner
 import sys
