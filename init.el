@@ -178,7 +178,16 @@
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq flymake-python-pyflakes-executable "~/.pyenv/shims/flake8")
 (custom-set-variables
- '(flymake-python-pyflakes-extra-arguments (quote ("--max-line-length=120" "--ignore=E128"))))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-minimum-prefix-length 1)
+ '(company-selection-wrap-around t)
+ '(flymake-python-pyflakes-extra-arguments (quote ("--max-line-length=120" "--ignore=E128")))
+ '(package-selected-packages
+   (quote
+    (sphinx-doc yaml-mode web-mode pyenv-mode js2-mode helm flymake-python-pyflakes elpy auto-complete))))
 (defun flymake-show-help ()
   (when (get-char-property (point) 'flymake-overlay)
     (let ((help (get-char-property (point) 'help-echo)))
@@ -202,11 +211,12 @@
 (elpy-enable)
 
 (setq elpy-rpc-backend "jedi")
-(custom-set-variables
- '(company-minimum-prefix-length 1)
- '(company-selection-wrap-around t))
+
 (custom-set-faces
-;; '(default ((t (:background "#131313" :foreground "white"))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(company-scrollbar-bg ((t (:inherit company-tooltip :background "dim gray"))))
  '(company-scrollbar-fg ((t (:background "blue"))))
  '(company-tooltip ((t (:background "#333333" :foreground "white"))))
