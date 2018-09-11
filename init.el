@@ -3,7 +3,7 @@
 ;;######################################################
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
-(load-theme 'manoj-dark t)
+(load-theme 'wombat t)
 
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8)
