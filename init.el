@@ -50,6 +50,7 @@
     yaml-mode
     flymake-python-pyflakes
     helm
+    find-file-in-project
     pyenv-mode
     elpy
     sphinx-doc
@@ -126,6 +127,7 @@
 		      (concat ".*" input-pattern)))))))
 (setq helm-ff-transformer-show-only-basename nil)
 (setq helm-buffer-max-length 50)
+(setq ffip-find-options "-not -regex \".*\.mypy_cache.*\"")
 
 ;;######################################################
 ;; Language Settings
