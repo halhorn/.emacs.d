@@ -246,3 +246,4 @@
  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'after-save-hook 'save-hook)
 (setq compilation-window-height 20)
+(put 'upcase-region 'disabled nil)
