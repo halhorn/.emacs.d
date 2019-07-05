@@ -236,6 +236,10 @@
 ;; aiml
 (add-to-list 'auto-mode-alist '("\\.aiml$"     . xml-mode))
 
+;; protobuf-mode
+(require 'protobuf-mode)
+(add-to-list 'auto-mode-alist '("\\.proto$" . protobuf-mode))
+
 
 ;;######################################################
 ;; Hooks
