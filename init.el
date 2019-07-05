@@ -68,11 +68,6 @@
 ;; Other Settings
 ;;######################################################
 
-(add-to-list 'load-path "~/git/emacs-async")
-
-(add-to-list 'load-path "~/git/helm")
-(require 'helm-config)
-
 ;(require 'auto-complete)
 ;(global-auto-complete-mode t)
 
@@ -89,6 +84,7 @@
 	   (propertize (format fmt line) 'face 'linum))))
 
 ;; helm
+(require 'helm-config)
 (when (require 'helm-config nil t)
   (helm-mode 1)
   (define-key global-map (kbd "M-x")     'helm-M-x)
