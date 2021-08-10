@@ -69,8 +69,8 @@
 ;; Other Settings
 ;;######################################################
 
-;(require 'auto-complete)
-;(global-auto-complete-mode t)
+(require 'auto-complete)
+(global-auto-complete-mode t)
 
 (require 'linum)
 (setq linum-format
@@ -142,6 +142,7 @@
 (add-to-list 'auto-mode-alist '("\\.tmpl?$"     . web-mode))
 (defun web-mode-hook ()
   "Hooks for Web mode."
+  (setq web-mode-html-offset   2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-offset    2)
   (setq web-mode-script-offset 2)
@@ -154,10 +155,18 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(require 'openapi-yaml-mode)
+(add-to-list 'auto-mode-alist '("apispec/.*\\.ya?ml$" . openapi-yaml-mode))
 
 ;; js
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;; json
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
 
 ;; Perl
 (require 'cperl-mode)
