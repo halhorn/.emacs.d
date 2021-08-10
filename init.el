@@ -55,6 +55,7 @@
     elpy
     sphinx-doc
     terraform-mode
+    vue-mode
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -167,6 +168,10 @@
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
+
+;; vue
+(require 'vue-mode)
+(add-to-list 'auto-mode-alist '("\\.vue$" . vue-mode))
 
 ;; Perl
 (require 'cperl-mode)
