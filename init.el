@@ -54,6 +54,7 @@
     pyenv-mode
     elpy
     sphinx-doc
+    terraform-mode
     ))
 
 (let ((not-installed (loop for x in installing-package-list
