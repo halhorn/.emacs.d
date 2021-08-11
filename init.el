@@ -34,7 +34,7 @@
 (require 'package)
 (when (require 'package nil t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/"))
+  (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
   (add-to-list 'package-archives '("elpy"      . "https://jorgenschaefer.github.io/packages/"))
   (package-initialize))
