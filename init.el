@@ -137,6 +137,9 @@
 (add-to-list 'auto-mode-alist '("\\.phtml$"     . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp$"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx$"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ts$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x$"   . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?$"     . web-mode))
@@ -145,12 +148,71 @@
   "Hooks for Web mode."
   (setq web-mode-html-offset   2)
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-offset    2)
   (setq web-mode-script-offset 2)
   (setq web-mode-php-offset    2)
   (setq web-mode-java-offset   2)
-  (setq web-mode-asp-offset    2))
+  (setq web-mode-asp-offset    2)
+  )
 (add-hook 'web-mode-hook 'web-mode-hook)
+(custom-set-faces
+ '(web-mode-doctype-face
+   ((t :inherit font-lock-doc-face)))
+ '(web-mode-html-tag-face
+   ((t :inherit font-lock-function-name-face)))
+ '(web-mode-html-attr-name-face
+   ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-html-attr-value-face
+   ((t :inherit font-lock-string-face)))
+ '(web-mode-comment-face
+   ((t :inherit font-lock-comment-face)))
+ '(web-mode-server-comment-face
+   ((t :inherit font-lock-comment-face)))
+ '(web-mode-javascript-comment-face
+   ((t :inherit font-lock-comment-face)))
+ '(web-mode-json-comment-face
+   ((t :inherit font-lock-comment-face)))
+ '(web-mode-error-face
+   ((t :inherit font-lock-warning-face)))
+ '(web-mode-current-element-highlight-face
+   ((t :inherit font-lock-builtin-face)))
+ '(web-mode-html-tag-bracket-face
+   ((t :inherit font-lock-negation-char-face)))
+ '(web-mode-block-delimiter-face
+   ((t :inherit font-lock-negation-char-face)))
+ '(web-mode-javascript-string-face
+   ((t :inherit font-lock-string-face)))
+ '(web-mode-json-key-face
+   ((t :inherit font-lock-keyword-face)))
+ '(web-mode-json-string-face
+   ((t :inherit font-lock-string-face)))
+ '(web-mode-keyword-face
+   ((t :inherit font-lock-keyword-face)))
+ '(web-mode-param-name-face
+   ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-preprocessor-face
+   ((t :inherit font-lock-preprocessor-face)))
+ '(web-mode-string-face
+   ((t :inherit font-lock-string-face)))
+ '(web-mode-type-face
+   ((t :inherit font-lock-type-face)))
+ '(web-mode-variable-name-face
+   ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-function-call-face
+   ((t :inherit font-lock-function-name-face)))
+ '(web-mode-function-name-face
+   ((t :inherit font-lock-function-name-face)))
+ '(web-mode-warning-face
+   ((t :inherit font-lock-warning-face)))
+ '(web-mode-css-color-face
+   ((t :inherit font-lock-reference-face)))
+ '(web-mode-css-rule-face
+   ((t :inherit font-lock-function-name-face)))
+ '(web-mode-css-pseudo-class-face
+   ((t :inherit font-lock-function-name-face)))
+ '(web-mode-css-at-rule-face
+      ((t :inherit font-lock-keyword-face))))
 
 ;; yaml
 (require 'yaml-mode)
