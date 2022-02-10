@@ -7,7 +7,7 @@
    ((eq major-mode 'python-mode)
     (compile
      ;; (format "cd %s && flake8 %s && python -m test.run %s" (find-root (buffer-file-name)) (buffer-file-name) (buffer-file-name))))
-     (format "cd %s && ./test/run %s" (find-root (buffer-file-name)) (buffer-file-name) )))
+     (format "cd %s && LOG_LEVEL=INFO ./test/run %s" (find-root (buffer-file-name)) (buffer-file-name) )))
 
    ((eq major-mode 'js2-mode)
     (compile
