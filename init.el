@@ -36,7 +36,6 @@
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
-  (add-to-list 'package-archives '("elpy"      . "https://jorgenschaefer.github.io/packages/"))
   (package-initialize))
 
 (require 'cl)
@@ -125,7 +124,7 @@
 		      (concat ".*" input-pattern)))))))
 (setq helm-ff-transformer-show-only-basename nil)
 (setq helm-buffer-max-length 50)
-(setq ffip-find-options "-not -regex \".*\.mypy_cache.*\"")
+(setq ffip-prune-patterns `("*/.mypy_cache"))
 
 ;;######################################################
 ;; Language Settings
