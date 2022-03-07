@@ -3,3 +3,5 @@ auto-save-list
 ac-comphist.dat
 network-security.data
 recentf
+.cache
+.lsp-session-*

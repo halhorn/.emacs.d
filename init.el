@@ -42,10 +42,13 @@
 (defvar installing-package-list
   '(
     ;; インストールするリスト
+    use-package
     auto-complete
     web-mode
     cperl-mode
     js2-mode
+    typescript-mode
+    lsp-mode
     yaml-mode
     flymake-python-pyflakes
     helm
@@ -64,6 +67,10 @@
     (package-refresh-contents)
     (dolist (pkg not-installed)
       (package-install pkg))))
+
+(eval-when-compile (require 'use-package))
+(setq use-package-verbose t)
+
 
 ;;######################################################
 ;; Other Settings
@@ -138,7 +145,6 @@
 (add-to-list 'auto-mode-alist '("\\.jsp$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx$"       . web-mode))
-(add-to-list 'auto-mode-alist '("\\.ts$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x$"   . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb$"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?$"     . web-mode))
@@ -156,62 +162,63 @@
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
 (custom-set-faces
- '(web-mode-doctype-face
-   ((t :inherit font-lock-doc-face)))
- '(web-mode-html-tag-face
-   ((t :inherit font-lock-function-name-face)))
- '(web-mode-html-attr-name-face
-   ((t :inherit font-lock-variable-name-face)))
- '(web-mode-html-attr-value-face
-   ((t :inherit font-lock-string-face)))
- '(web-mode-comment-face
-   ((t :inherit font-lock-comment-face)))
- '(web-mode-server-comment-face
-   ((t :inherit font-lock-comment-face)))
- '(web-mode-javascript-comment-face
-   ((t :inherit font-lock-comment-face)))
- '(web-mode-json-comment-face
-   ((t :inherit font-lock-comment-face)))
- '(web-mode-error-face
-   ((t :inherit font-lock-warning-face)))
- '(web-mode-current-element-highlight-face
-   ((t :inherit font-lock-builtin-face)))
- '(web-mode-html-tag-bracket-face
-   ((t :inherit font-lock-negation-char-face)))
- '(web-mode-block-delimiter-face
-   ((t :inherit font-lock-negation-char-face)))
- '(web-mode-javascript-string-face
-   ((t :inherit font-lock-string-face)))
- '(web-mode-json-key-face
-   ((t :inherit font-lock-keyword-face)))
- '(web-mode-json-string-face
-   ((t :inherit font-lock-string-face)))
- '(web-mode-keyword-face
-   ((t :inherit font-lock-keyword-face)))
- '(web-mode-param-name-face
-   ((t :inherit font-lock-variable-name-face)))
- '(web-mode-preprocessor-face
-   ((t :inherit font-lock-preprocessor-face)))
- '(web-mode-string-face
-   ((t :inherit font-lock-string-face)))
- '(web-mode-type-face
-   ((t :inherit font-lock-type-face)))
- '(web-mode-variable-name-face
-   ((t :inherit font-lock-variable-name-face)))
- '(web-mode-function-call-face
-   ((t :inherit font-lock-function-name-face)))
- '(web-mode-function-name-face
-   ((t :inherit font-lock-function-name-face)))
- '(web-mode-warning-face
-   ((t :inherit font-lock-warning-face)))
- '(web-mode-css-color-face
-   ((t :inherit font-lock-reference-face)))
- '(web-mode-css-rule-face
-   ((t :inherit font-lock-function-name-face)))
- '(web-mode-css-pseudo-class-face
-   ((t :inherit font-lock-function-name-face)))
- '(web-mode-css-at-rule-face
-      ((t :inherit font-lock-keyword-face))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip ((t (:background "#333333" :foreground "white"))))
+ '(company-tooltip-annotation ((t (:inherit company-tooltip :foreground "white"))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :foreground "white"))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "white"))))
+ '(company-tooltip-scrollbar-thumb ((t (:background "blue"))))
+ '(company-tooltip-scrollbar-track ((t (:inherit company-tooltip :background "dim gray"))))
+ '(company-tooltip-selection ((t (:inherit company-tooltip :background "#131388"))))
+ '(mode-line ((t (:foreground "#F8F8F2" :background "#303030" :box (:line-width 1 :color "#000000" :style released-button)))))
+ '(mode-line-buffer-id ((t (:foreground nil :background nil))))
+ '(mode-line-inactive ((t (:foreground "#BCBCBC" :background "#101010" :box (:line-width 1 :color "#333333")))))
+ '(web-mode-block-delimiter-face ((t :inherit font-lock-negation-char-face)))
+ '(web-mode-comment-face ((t :inherit font-lock-comment-face)))
+ '(web-mode-css-at-rule-face ((t :inherit font-lock-keyword-face)))
+ '(web-mode-css-color-face ((t :inherit font-lock-reference-face)))
+ '(web-mode-css-pseudo-class-face ((t :inherit font-lock-function-name-face)))
+ '(web-mode-css-rule-face ((t :inherit font-lock-function-name-face)))
+ '(web-mode-current-element-highlight-face ((t :inherit font-lock-builtin-face)))
+ '(web-mode-doctype-face ((t :inherit font-lock-doc-face)))
+ '(web-mode-error-face ((t :inherit font-lock-warning-face)))
+ '(web-mode-function-call-face ((t :inherit font-lock-function-name-face)))
+ '(web-mode-function-name-face ((t :inherit font-lock-function-name-face)))
+ '(web-mode-html-attr-name-face ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-html-attr-value-face ((t :inherit font-lock-string-face)))
+ '(web-mode-html-tag-bracket-face ((t :inherit font-lock-negation-char-face)))
+ '(web-mode-html-tag-face ((t :inherit font-lock-function-name-face)))
+ '(web-mode-javascript-comment-face ((t :inherit font-lock-comment-face)))
+ '(web-mode-javascript-string-face ((t :inherit font-lock-string-face)))
+ '(web-mode-json-comment-face ((t :inherit font-lock-comment-face)))
+ '(web-mode-json-key-face ((t :inherit font-lock-keyword-face)))
+ '(web-mode-json-string-face ((t :inherit font-lock-string-face)))
+ '(web-mode-keyword-face ((t :inherit font-lock-keyword-face)))
+ '(web-mode-param-name-face ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-preprocessor-face ((t :inherit font-lock-preprocessor-face)))
+ '(web-mode-server-comment-face ((t :inherit font-lock-comment-face)))
+ '(web-mode-string-face ((t :inherit font-lock-string-face)))
+ '(web-mode-type-face ((t :inherit font-lock-type-face)))
+ '(web-mode-variable-name-face ((t :inherit font-lock-variable-name-face)))
+ '(web-mode-warning-face ((t :inherit font-lock-warning-face))))
+
+;; typescript
+(require 'typescript-mode)
+(add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
+(add-to-list 'auto-mode-alist '("\.ts$" . typescript-mode))
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (ansi-color-apply-on-region compilation-filter-start (point-max)))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (typescript-mode . lsp-deferred))
+
 
 ;; yaml
 (require 'yaml-mode)
@@ -287,21 +294,7 @@
 
 (setq elpy-rpc-backend "jedi")
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-scrollbar-bg ((t (:inherit company-tooltip :background "dim gray"))))
- '(company-scrollbar-fg ((t (:background "blue"))))
- '(company-tooltip ((t (:background "#333333" :foreground "white"))))
- '(company-tooltip-annotation ((t (:inherit company-tooltip :foreground "white"))))
- '(company-tooltip-common ((t (:inherit company-tooltip :foreground "white"))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground "white"))))
- '(company-tooltip-selection ((t (:inherit company-tooltip :background "#131388"))))
- '(mode-line ((t (:foreground "#F8F8F2" :background "#303030" :box (:line-width 1 :color "#000000" :style released-button)))))
- '(mode-line-buffer-id ((t (:foreground nil :background nil))))
- '(mode-line-inactive ((t (:foreground "#BCBCBC" :background "#101010" :box (:line-width 1 :color "#333333"))))))
+
 (add-hook 'python-mode-hook '(lambda ()
                                (define-key python-mode-map (kbd "C-c C-g") 'elpy-goto-definition)))
 
