@@ -12,6 +12,14 @@
    ((eq major-mode 'js2-mode)
     (compile
      (format "npm run test")))
+
+   ((eq major-mode 'typescript-mode)
+    (compile
+     (format "cd %s && ./run_front_check" (find-root (buffer-file-name)) )))
+
+   ((eq major-mode 'web-mode)
+    (compile
+     (format "cd %s && ./run_front_check" (find-root (buffer-file-name)) )))
    ))
 
 (provide 'save-hook)
