@@ -58,6 +58,7 @@
     sphinx-doc
     terraform-mode
     vue-mode
+    flycheck
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -204,6 +205,17 @@
  '(web-mode-type-face ((t :inherit font-lock-type-face)))
  '(web-mode-variable-name-face ((t :inherit font-lock-variable-name-face)))
  '(web-mode-warning-face ((t :inherit font-lock-warning-face))))
+
+
+;; セットアップメモ
+;; C-c ! v で一覧表示。 javascript-eslint があるか確認。
+;; executable が NotFound 担っている場合 M-x flycheck-set-checker-executable で以下指定
+;; node_modules/eslint/bin/eslint.js
+(use-package flycheck
+  :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (global-flycheck-mode t))
+
 
 ;; typescript
 (require 'typescript-mode)
