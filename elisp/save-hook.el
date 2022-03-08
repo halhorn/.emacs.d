@@ -15,11 +15,11 @@
 
    ((eq major-mode 'typescript-mode)
     (compile
-     (format "cd %s && ./run_front_test" (find-root (buffer-file-name)) )))
+     (format "cd %s && ./run_front_test --watchAll=false %s" (find-root (buffer-file-name)) (buffer-file-name) )))
 
    ((eq major-mode 'web-mode)
     (compile
-     (format "cd %s && ./run_front_test" (find-root (buffer-file-name)) )))
+     (format "cd %s && ./run_front_test --watchAll=false %s" (find-root (buffer-file-name)) (buffer-file-name) )))
    ))
 
 (provide 'save-hook)
