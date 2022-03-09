@@ -207,16 +207,16 @@
  '(web-mode-variable-name-face ((t :inherit font-lock-variable-name-face)))
  '(web-mode-warning-face ((t :inherit font-lock-warning-face))))
 
-;; tsx などは web-mode で動かすので別途 flycheck 走らせる
+
+;; typescript
 (use-package add-node-modules-path
-  :hook (web-mode))
+  :hook (web-mode, typescript-mode))
 (use-package flycheck
   :config
   (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   (global-flycheck-mode t))
 
-
-;; typescript
 (require 'typescript-mode)
 (add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
 (add-to-list 'auto-mode-alist '("\.ts$" . typescript-mode))
