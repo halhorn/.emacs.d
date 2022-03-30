@@ -27,6 +27,12 @@
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 
+(defun enable-minor-mode (my-pair)
+  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+  (if (buffer-file-name)
+      (if (string-match (car my-pair) buffer-file-name)
+      (funcall (cdr my-pair)))))
+
 ;;######################################################
 ;; Package Install
 ;;######################################################
@@ -60,6 +66,7 @@
     terraform-mode
     vue-mode
     flycheck
+    prettier-js
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -142,6 +149,7 @@
 ;; web
 (global-linum-mode)
 (require 'web-mode)
+(require 'prettier-js)
 (add-to-list 'auto-mode-alist '("\\.phtml$"     . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp$"       . web-mode))
@@ -163,6 +171,7 @@
   (setq web-mode-asp-offset    2)
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
+(add-hook 'web-mode-hook 'prettier-js-mode)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -207,6 +216,10 @@
  '(web-mode-variable-name-face ((t :inherit font-lock-variable-name-face)))
  '(web-mode-warning-face ((t :inherit font-lock-warning-face))))
 
+(add-hook 'web-mode-hook #'(lambda ()
+                            (enable-minor-mode
+                             '("\\.[jt]sx?\\'" . prettier-js-mode))))
+
 
 ;; typescript
 (use-package add-node-modules-path
@@ -230,6 +243,10 @@
   :commands (lsp lsp-deferred)
   :hook (typescript-mode . lsp-deferred))
 
+(add-hook 'typescript-mode-hook 'prettier-js-mode)
+(add-hook 'typescript-mode #'(lambda ()
+                               (enable-minor-mode
+                                '("\\.[jt]sx?\\'" . prettier-js-mode))))
 
 ;; yaml
 (require 'yaml-mode)
